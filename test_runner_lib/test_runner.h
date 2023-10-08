@@ -6,6 +6,7 @@
 #include <map>
 #include <set>
 #include <string>
+#include <unordered_map>
 
 #define ASSERT_EQUAL(x, y)                     \
     {                                          \
@@ -44,6 +45,9 @@ ostream &operator<<(ostream &out, const map<Key, Value> &m);
 
 template <typename T>
 ostream &operator<<(ostream &out, const set<T> &s);
+
+template <typename Key, typename Value>
+ostream &operator<<(ostream &out, const unordered_map<Key, Value> &m);
 
 template <class T, class U>
 void AssertEqual(const T &t, const U &u, const string &hint);
@@ -108,6 +112,12 @@ ostream &operator<<(ostream &out, const set<T> &s)
     return out << '{' << Join(s, ", ") << '}';
 }
 
+template <typename Key, typename Value>
+ostream &operator<<(ostream &out, const unordered_map<Key, Value> &m)
+{
+    return out << '{' << Join(m, ", ") << '}';
+}
+
 template <class T, class U>
 void AssertEqual(const T &t, const U &u, const string &hint)
 {
@@ -128,16 +138,19 @@ void TestRunner::RunTest(TestFunction test, const string &test_name)
     try
     {
         test();
-        cerr << test_name << " - OK" << endl << endl;
+        cerr << test_name << " - OK" << endl
+             << endl;
     }
     catch (exception &e)
     {
         ++fail_count;
-        cerr << test_name << " - FAIL -> " << e.what() << endl << endl;
+        cerr << test_name << " - FAIL -> " << e.what() << endl
+             << endl;
     }
     catch (...)
     {
         ++fail_count;
-        cerr << "Unknown exception caught" << endl << endl;
+        cerr << "Unknown exception caught" << endl
+             << endl;
     }
 }

@@ -6,7 +6,28 @@ set(CMAKE_CXX_FLAGS -pthread)
 include_directories(test_runner_lib profile)
 add_subdirectory(test_runner_lib)
 
-set(SOURCE week_1/main.cpp)
+# set(SOURCE week_1/priority_collection.cpp)
+# set(SOURCE week_1/head.cpp)
+# set(SOURCE week_1/hash_set.cpp)
+# set(SOURCE week_1/set_iterator_next.cpp)
+# set(SOURCE week_1/hash_point.cpp)
+# set(SOURCE week_1/hash_person.cpp)
+# set(SOURCE week_1/secondary_index.cpp)
+
+# file(GLOB SOURCE
+#     week_2/spendings_xml.cpp
+#     week_2/xml.h
+#     week_2/xml.cpp)
+
+# file(GLOB SOURCE
+#     week_2/spendings_json.cpp
+#     week_2/json.h
+#     week_2/json.cpp)
+
+file(GLOB SOURCE
+    week_2/test_ini.cpp
+    week_2/ini.h
+    week_2/ini.cpp)
 
 add_executable(${PROJECT_NAME} ${SOURCE})
 
