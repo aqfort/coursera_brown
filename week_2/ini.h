@@ -13,9 +13,9 @@ namespace Ini
     public:
         explicit Document() = default;
 
-        const size_t SectionCount() const;
+        size_t SectionCount() const;
         const Section &GetSection(const std::string &section) const;
-        Section &AddSection(const std::string &section);
+        Section &AddSection(std::string section);
 
     private:
         std::unordered_map<std::string, Section> data_storage;

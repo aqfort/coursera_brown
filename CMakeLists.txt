@@ -24,10 +24,32 @@ add_subdirectory(test_runner_lib)
 #     week_2/json.h
 #     week_2/json.cpp)
 
-file(GLOB SOURCE
-    week_2/test_ini.cpp
-    week_2/ini.h
-    week_2/ini.cpp)
+# file(GLOB SOURCE
+#     week_2/test_ini.cpp
+#     week_2/ini.h
+#     week_2/ini.cpp)
+
+# file(GLOB SOURCE
+#     week_2/refactoring/refactoring.cpp
+#     week_2/refactoring/json.h
+#     week_2/refactoring/json.cpp
+#     week_2/refactoring/xml.h
+#     week_2/refactoring/xml.cpp)
+
+# file(GLOB SOURCE
+#     week_2/stats_aggregator/main.cpp
+#     week_2/stats_aggregator/stats_aggregator.h
+#     week_2/stats_aggregator/stats_aggregator.cpp
+#     week_2/stats_aggregator/stats_aggregator_test.cpp)
+
+# file(GLOB SOURCE
+#     # week_2/collide/collide.cpp
+#     week_2/collide/collide_right_version.cpp
+#     week_2/collide/game_object.h
+#     week_2/collide/geo2d.h
+#     week_2/collide/geo2d.cpp)
+
+set(SOURCE week_2/comment_server.cpp)
 
 add_executable(${PROJECT_NAME} ${SOURCE})
 
