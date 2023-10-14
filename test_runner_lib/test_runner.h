@@ -8,20 +8,20 @@
 #include <string>
 #include <unordered_map>
 
-#define ASSERT_EQUAL(x, y)                     \
-    {                                          \
-        ostringstream ASS_OS;                  \
-        ASS_OS << #x << " != " << #y << endl   \
-               << __FILE__ << ":" << __LINE__; \
-        AssertEqual(x, y, ASS_OS.str());       \
+#define ASSERT_EQUAL(x, y)                        \
+    {                                             \
+        std::ostringstream ASS_OS;                \
+        ASS_OS << #x << " != " << #y << std::endl \
+               << __FILE__ << ":" << __LINE__;    \
+        AssertEqual(x, y, ASS_OS.str());          \
     }
 
-#define ASSERT(x)                              \
-    {                                          \
-        ostringstream ASS_OS;                  \
-        ASS_OS << #x << " is false" << endl    \
-               << __FILE__ << ":" << __LINE__; \
-        Assert(x, ASS_OS.str());               \
+#define ASSERT(x)                                \
+    {                                            \
+        std::ostringstream ASS_OS;               \
+        ASS_OS << #x << " is false" << std::endl \
+               << __FILE__ << ":" << __LINE__;   \
+        Assert(x, ASS_OS.str());                 \
     }
 
 #define RUN_TEST(tr, func)       \
@@ -29,30 +29,28 @@
         tr.RunTest(func, #func); \
     }
 
-using namespace std;
-
 template <typename Collection>
-[[maybe_unused]] string Join(const Collection &c, char d);
+[[maybe_unused]] std::string Join(const Collection &c, char d);
 
 template <typename First, typename Second>
-ostream &operator<<(ostream &out, const pair<First, Second> &p);
+std::ostream &operator<<(std::ostream &out, const std::pair<First, Second> &p);
 
 template <typename T>
-ostream &operator<<(ostream &out, const vector<T> &v);
+std::ostream &operator<<(std::ostream &out, const std::vector<T> &v);
 
 template <typename Key, typename Value>
-ostream &operator<<(ostream &out, const map<Key, Value> &m);
+std::ostream &operator<<(std::ostream &out, const std::map<Key, Value> &m);
 
 template <typename T>
-ostream &operator<<(ostream &out, const set<T> &s);
+std::ostream &operator<<(std::ostream &out, const std::set<T> &s);
 
 template <typename Key, typename Value>
-ostream &operator<<(ostream &out, const unordered_map<Key, Value> &m);
+std::ostream &operator<<(std::ostream &out, const std::unordered_map<Key, Value> &m);
 
 template <class T, class U>
-void AssertEqual(const T &t, const U &u, const string &hint);
+void AssertEqual(const T &t, const U &u, const std::string &hint);
 
-inline void Assert(bool b, const string &hint)
+inline void Assert(bool b, const std::string &hint)
 {
     AssertEqual(b, true, hint);
 }
@@ -65,16 +63,16 @@ public:
     ~TestRunner();
 
     template <class TestFunction>
-    void RunTest(TestFunction test, const string &test_name);
+    void RunTest(TestFunction test, const std::string &test_name);
 
 private:
     int fail_count = 0;
 };
 
 template <typename Collection>
-string Join(const Collection &c, const string &d)
+std::string Join(const Collection &c, const std::string &d)
 {
-    stringstream ss;
+    std::stringstream ss;
     bool first = true;
     for (const auto &i : c)
     {
@@ -89,68 +87,73 @@ string Join(const Collection &c, const string &d)
 }
 
 template <typename First, typename Second>
-ostream &operator<<(ostream &out, const pair<First, Second> &p)
+std::ostream &operator<<(std::ostream &out, const std::pair<First, Second> &p)
 {
     return out << '(' << p.first << ", " << p.second << ')';
 }
 
 template <typename T>
-ostream &operator<<(ostream &out, const vector<T> &v)
+std::ostream &operator<<(std::ostream &out, const std::vector<T> &v)
 {
     return out << '[' << Join(v, ", ") << ']';
 }
 
 template <typename Key, typename Value>
-ostream &operator<<(ostream &out, const map<Key, Value> &m)
+std::ostream &operator<<(std::ostream &out, const std::map<Key, Value> &m)
 {
     return out << '{' << Join(m, ", ") << '}';
 }
 
 template <typename T>
-ostream &operator<<(ostream &out, const set<T> &s)
+std::ostream &operator<<(std::ostream &out, const std::set<T> &s)
 {
     return out << '{' << Join(s, ", ") << '}';
 }
 
 template <typename Key, typename Value>
-ostream &operator<<(ostream &out, const unordered_map<Key, Value> &m)
+std::ostream &operator<<(std::ostream &out, const std::unordered_map<Key, Value> &m)
 {
     return out << '{' << Join(m, ", ") << '}';
 }
 
 template <class T, class U>
-void AssertEqual(const T &t, const U &u, const string &hint)
+void AssertEqual(const T &t, const U &u, const std::string &hint)
 {
     if (t != u)
     {
-        ostringstream os;
+        std::ostringstream os;
+        os << ">> Assertion failed" << std::endl
+           << ">>      Got: " << t << std::endl
+           << ">> Expected: " << u;
         if (!hint.empty())
         {
-            os << "Assertion failed: " << t << " != " << u << " -> Hint: " << hint;
+            os << std::endl
+               << ">> Hint: " << hint;
         }
-        throw runtime_error(os.str());
+        throw std::runtime_error(os.str());
     }
 }
 
 template <class TestFunction>
-void TestRunner::RunTest(TestFunction test, const string &test_name)
+void TestRunner::RunTest(TestFunction test, const std::string &test_name)
 {
     try
     {
         test();
-        cerr << test_name << " - OK" << endl
-             << endl;
+        std::cerr << test_name << " - OK" << std::endl
+                  << std::endl;
     }
-    catch (exception &e)
+    catch (std::exception &e)
     {
         ++fail_count;
-        cerr << test_name << " - FAIL -> " << e.what() << endl
-             << endl;
+        std::cerr << test_name << " - FAIL" << std::endl
+                  << e.what() << std::endl
+                  << std::endl;
     }
     catch (...)
     {
         ++fail_count;
-        cerr << "Unknown exception caught" << endl
-             << endl;
+        std::cerr << "Unknown exception caught" << std::endl
+                  << std::endl;
     }
 }
