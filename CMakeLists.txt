@@ -49,7 +49,13 @@ add_subdirectory(test_runner_lib)
 #     week_2/collide/geo2d.h
 #     week_2/collide/geo2d.cpp)
 
-set(SOURCE week_2/comment_server.cpp)
+# set(SOURCE week_2/comment_server.cpp)
+
+# set(SOURCE week_3/print_stats_2.cpp)
+# set(SOURCE week_3/lazy_value.cpp)
+# set(SOURCE week_3/synchronized_2.cpp)
+# set(SOURCE week_3/concurrent_map_2.cpp)
+set(SOURCE week_3/polynomial.cpp)
 
 add_executable(${PROJECT_NAME} ${SOURCE})
 
