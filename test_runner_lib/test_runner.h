@@ -58,10 +58,8 @@ inline void Assert(bool b, const std::string &hint)
 class [[maybe_unused]] TestRunner
 {
 public:
-    TestRunner();
-
+    explicit TestRunner();
     ~TestRunner();
-
     template <class TestFunction>
     void RunTest(TestFunction test, const std::string &test_name);
 
@@ -140,20 +138,17 @@ void TestRunner::RunTest(TestFunction test, const std::string &test_name)
     try
     {
         test();
-        std::cerr << test_name << " - OK" << std::endl
-                  << std::endl;
+        std::cerr << test_name << " - OK" << std::endl;
     }
     catch (std::exception &e)
     {
         ++fail_count;
         std::cerr << test_name << " - FAIL" << std::endl
-                  << e.what() << std::endl
-                  << std::endl;
+                  << e.what() << std::endl;
     }
     catch (...)
     {
         ++fail_count;
-        std::cerr << "Unknown exception caught" << std::endl
-                  << std::endl;
+        std::cerr << "Unknown exception caught" << std::endl;
     }
 }
